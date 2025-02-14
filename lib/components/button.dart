@@ -17,7 +17,7 @@ class Buttonapp extends StatelessWidget {
             child: Text(
               "Sign In",
               style: TextStyle(
-                color: Color.fromARGB(255, 7, 75, 114),
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),

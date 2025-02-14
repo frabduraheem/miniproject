@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 7, 75, 114),
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Center(
             child: Column(
@@ -132,7 +132,7 @@ class LoginPage extends StatelessWidget {
                   Text(
                     "register now!",
                     style: TextStyle(
-                      color: Colors.blueGrey,
+                      color: Colors.blue,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
