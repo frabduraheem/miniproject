@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "298364847793",
+    "project_id": "mini-c7e4e",
+    "storage_bucket": "mini-c7e4e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298364847793:android:3d90f90ed337256cfe4490",
+        "android_client_info": {
+          "package_name": "com.example.testapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnN4Izer7py3Dv4PkRnZTvEwRCBnrxOgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
