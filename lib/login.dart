@@ -3,26 +3,25 @@ import 'package:testapp/components/button.dart';
 import 'package:testapp/components/square.dart';
 
 import 'package:testapp/components/textfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   //text editing controllers
   final usernamecontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
-
-  void signUserIn() {
-await FirebaseAuth.instance.signInWithEmailAndPassword(
-  email: usernamecontroller.text,
-  password: passwordcontroller.text,
-);
+  void signUserIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: usernamecontroller.text,
+      password: passwordcontroller.text,
+    );
   }
 
-  void registerUser() {
+  void registerUser() async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: usernamecontroller.text,
       password: passwordcontroller.text,
-
-);
+    );
   }
 
   @override
