@@ -10,7 +10,20 @@ class LoginPage extends StatelessWidget {
   final usernamecontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
 
-  void signUserIn() {}
+  void signUserIn() {
+await FirebaseAuth.instance.signInWithEmailAndPassword(
+  email: usernamecontroller.text,
+  password: passwordcontroller.text,
+);
+  }
+
+  void registerUser() {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: usernamecontroller.text,
+      password: passwordcontroller.text,
+
+);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,13 +106,6 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Text('Or continue with',
                   style: TextStyle(color: Colors.white)),
-            ),
-
-            Expanded(
-              child: Divider(
-                thickness: 0.5,
-                color: Color.fromARGB(255, 7, 75, 114),
-              ),
             ),
 
             Row(
