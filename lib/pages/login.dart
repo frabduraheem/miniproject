@@ -8,18 +8,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   //text editing controllers
-  final usernamecontroller = TextEditingController();
+  final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   void signUserIn() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: usernamecontroller.text,
+      email: emailcontroller.text,
       password: passwordcontroller.text,
     );
   }
 
   void registerUser() async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: usernamecontroller.text,
+      email: emailcontroller.text,
       password: passwordcontroller.text,
     );
   }
@@ -51,7 +51,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 25),
             //username
             Textfield(
-              controller: usernamecontroller,
+              controller: emailcontroller,
               hintText: 'Username',
               obscureText: false,
             ),
