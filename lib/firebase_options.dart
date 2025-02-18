@@ -59,4 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'mini-c7e4e',
     storageBucket: 'mini-c7e4e.firebasestorage.app',
   );
+
 }

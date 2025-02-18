@@ -17,13 +17,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void registerUser() async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailcontroller.text,
-      password: passwordcontroller.text,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
