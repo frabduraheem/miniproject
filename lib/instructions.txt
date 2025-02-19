@@ -1,0 +1,10 @@
+main.dart  --> this is where our code starts, 
+there you can see it returns AUthpage() (which is a function in the file called authpage.dart 
+in the folder 'pages'(lib--pages--authpage.dart)!)
+
+authpage.dart --> this is where i connected firebase, like if they logged there it should lead us to
+homepage(lib--pages--home_page.dart) but yeah unfortunately this thing doesnt work.
+
+login.dart--> this contains neccessary ui design for the login page, backed by the folders components and images 
+for icons and repeated functions.
+
