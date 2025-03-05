@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:testapp/firebase_options.dart';
 import 'package:testapp/pages/authpage.dart';
 import 'package:testapp/pages/login.dart';
+import 'package:testapp/pages/signup.dart';
 // ignore: unused_import
 import 'package:firebase_core/firebase_core.dart';
 
