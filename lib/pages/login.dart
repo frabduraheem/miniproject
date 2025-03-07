@@ -4,17 +4,42 @@ import 'package:testapp/components/square.dart';
 
 import 'package:testapp/components/textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:testapp/pages/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   //text editing controllers
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
-  void signUserIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailcontroller.text,
-      password: passwordcontroller.text,
-    );
+
+  Future<void> signUserIn(context) async {
+    try {
+      final userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailcontroller.text.trim(),
+              password: passwordcontroller.text.trim());
+      // String UID = getCurrentUserID();
+      // await FirebaseFirestore.instance.collection("users").add({
+      //   "userID": UID,
+      //   "username": _usernameController.text.trim(),
+      //   "isAdmin": isAdmin,
+      // });
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Text(e.message!),
+        duration: Duration(seconds: 5),
+        margin: EdgeInsets.all(20),
+        behavior: SnackBarBehavior.floating,
+      ));
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -73,10 +98,14 @@ class LoginPage extends StatelessWidget {
             ),
 
             const SizedBox(height: 25),
-            Buttonapp(
-              onTap: signUserIn,
-            ),
-
+            // Buttonapp(
+            //   onTap: signUserIn,
+            // ),
+            ElevatedButton(
+                onPressed: () async {
+                  await signUserIn(context);
+                },
+                child: Text("Sign in")),
 //divider
             const SizedBox(
               height: 50,
