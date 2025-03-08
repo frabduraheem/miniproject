@@ -1,70 +1,79 @@
 import 'package:flutter/material.dart';
 
+class IndexedMap {
+  late String text;
+  late int value;
+
+  IndexedMap(String text, int value) {
+    this.text = text;
+    this.value = value;
+  }
+}
+
 class QuizScreen extends StatefulWidget {
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  // Sample questions
-  final List<String> questions = [
-    "Test the quality of parts before shipment",
-    "Lay brick or tile",
-    "Work on an offshore oil-drilling rig",
-    "Assemble electronic parts",
-    "Operate a grinding machine in a factory",
-    "Fix a broken faucet",
-    "Assemble products in a factory",
-    "Install flooring in houses",
-    "Study the structure of the human body",
-    "Study animal behavior",
-    "Do research on plants or animals",
-    "Develop a new medical treatment or procedure",
-    "Conduct biological research",
-    "Study whales and other types of marine life",
-    "Work in a biology lab",
-    "Make a map of the bottom of an ocean",
-    "Conduct a musical choir",
-    "Direct a play",
-    "Design artwork for magazines",
-    "Write a song",
-    "Write books or plays",
-    "Play a musical instrument",
-    "Perform stunts for a movie or television show",
-    "Design sets for plays",
-    "Give career guidance to people",
-    "Do volunteer work at a non-profit organization",
-    "Help people who have problems with drugs or alcohol",
-    "Teach an individual an exercise routine",
-    "Help people with family-related problems",
-    "Supervise the activities of children at a camp",
-    "Teach children how to read",
-    "Help elderly people with their daily activities",
-    "Sell restaurant franchises to individuals",
-    "Sell merchandise at a department store",
-    "Manage the operations of a hotel",
-    "Operate a beauty salon or barber shop",
-    "Manage a department within a large company",
-    "Manage a clothing store",
-    "Sell houses",
-    "Run a toy store",
-    "Generate the monthly payroll checks for an office",
-    "Inventory supplies using a hand-held computer",
-    "Use a computer program to generate customer bills",
-    "Maintain employee records",
-    "Compute and record statistical and other numerical data",
-    "Operate a calculator",
-    "Handle customers' bank transactions",
-    "Keep shipping and receiving records"
+  final List<IndexedMap> questions = [
+    IndexedMap("Test the quality of parts before shipment", 00),
+    IndexedMap("Lay brick or tile", 01),
+    IndexedMap("Work on an offshore oil-drilling rig", 02),
+    IndexedMap("Assemble electronic parts", 03),
+    IndexedMap("Operate a grinding machine in a factory", 04),
+    IndexedMap("Fix a broken faucet", 05),
+    IndexedMap("Assemble products in a factory", 06),
+    IndexedMap("Install flooring in houses", 07),
+    IndexedMap("Study the structure of the human body", 10),
+    IndexedMap("Study animal behavior", 11),
+    IndexedMap("Do research on plants or animals", 12),
+    IndexedMap("Develop a new medical treatment or procedure", 13),
+    IndexedMap("Conduct biological research", 14),
+    IndexedMap("Study whales and other types of marine life", 15),
+    IndexedMap("Work in a biology lab", 16),
+    IndexedMap("Make a map of the bottom of an ocean", 17),
+    IndexedMap("Conduct a musical choir", 20),
+    IndexedMap("Direct a play", 21),
+    IndexedMap("Design artwork for magazines", 22),
+    IndexedMap("Write a song", 23),
+    IndexedMap("Write books or plays", 24),
+    IndexedMap("Play a musical instrument", 25),
+    IndexedMap("Perform stunts for a movie or television show", 26),
+    IndexedMap("Design sets for plays", 27),
+    IndexedMap("Give career guidance to people", 30),
+    IndexedMap("Do volunteer work at a non-profit organization", 31),
+    IndexedMap("Help people who have problems with drugs or alcohol", 32),
+    IndexedMap("Teach an individual an exercise routine", 33),
+    IndexedMap("Help people with family-related problems", 34),
+    IndexedMap("Supervise the activities of children at a camp", 35),
+    IndexedMap("Teach children how to read", 36),
+    IndexedMap("Help elderly people with their daily activities", 37),
+    IndexedMap("Sell restaurant franchises to individuals", 40),
+    IndexedMap("Sell merchandise at a department store", 41),
+    IndexedMap("Manage the operations of a hotel", 42),
+    IndexedMap("Operate a beauty salon or barber shop", 43),
+    IndexedMap("Manage a department within a large company", 44),
+    IndexedMap("Manage a clothing store", 45),
+    IndexedMap("Sell houses", 46),
+    IndexedMap("Run a toy store", 47),
+    IndexedMap("Generate the monthly payroll checks for an office", 50),
+    IndexedMap("Inventory supplies using a hand-held computer", 51),
+    IndexedMap("Use a computer program to generate customer bills", 52),
+    IndexedMap("Maintain employee records", 53),
+    IndexedMap("Compute and record statistical and other numerical data", 54),
+    IndexedMap("Operate a calculator", 55),
+    IndexedMap("Handle customers' bank transactions", 56),
+    IndexedMap("Keep shipping and receiving records", 57),
   ];
 
   // Response options
-  final List<String> options = [
-    "Strongly Disagree",
-    "Disagree",
-    "Neutral",
-    "Agree",
-    "Strongly Agree"
+  final List<IndexedMap> options = [
+    IndexedMap("Strongly Disagree", 1),
+    IndexedMap("Disagree", 3),
+    IndexedMap("Neutral", 4),
+    IndexedMap("Agree", 5),
+    IndexedMap("Strongly Agree", 7),
   ];
 
   // Store selected answers
@@ -91,19 +100,19 @@ class _QuizScreenState extends State<QuizScreen> {
                 Padding(
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    questions[index],
+                    questions[index].text,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Column(
                   children: List.generate(options.length, (optionIndex) {
                     return RadioListTile<int>(
-                      title: Text(options[optionIndex]),
-                      value: optionIndex,
-                      groupValue: selectedAnswers[index],
+                      title: Text(options[optionIndex].text),
+                      value: options[optionIndex].value,
+                      groupValue: selectedAnswers[questions[index].value],
                       onChanged: (value) {
                         setState(() {
-                          selectedAnswers[index] = value;
+                          selectedAnswers[questions[index].value] = value;
                         });
                       },
                     );
@@ -118,7 +127,11 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Icon(Icons.check),
         backgroundColor: Colors.black,
         onPressed: () {
-          print("Selected Answers: $selectedAnswers");
+          List<int> riasec = [0, 0, 0, 0, 0, 0];
+          selectedAnswers.forEach((key, value) {
+            riasec[(key / 10).toInt()] += value!;
+          });
+          print("Riasec Score: $riasec");
         },
       ),
     );
