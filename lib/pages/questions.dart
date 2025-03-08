@@ -1,19 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(QuizApp());
-}
-
-class QuizApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: QuizScreen(),
-    );
-  }
-}
-
 class QuizScreen extends StatefulWidget {
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -90,6 +76,7 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         title: Text(
           "Questionnaire!",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: Colors.black,
       ),
