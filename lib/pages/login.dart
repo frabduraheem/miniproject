@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:testapp/components/button.dart';
 import 'package:testapp/components/square.dart';
-
 import 'package:testapp/components/textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:testapp/pages/home_page.dart';
+import 'package:testapp/pages/signup.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -70,7 +70,7 @@ class LoginPage extends StatelessWidget {
             //username
             Textfield(
               controller: emailcontroller,
-              hintText: 'Username',
+              hintText: 'Email',
               obscureText: false,
             ),
 
@@ -156,13 +156,24 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(
                     width: 4,
                   ),
-                  Text(
-                    "register now!",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: () {
+                      // Navigate to the signup page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                SignUpPage()), // Replace with your actual SignUpPage widget
+                      );
+                    },
+                    child: Text(
+                      "Register Now!",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
