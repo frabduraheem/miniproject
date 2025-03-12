@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testapp/client/client.dart';
 
 class IndexedMap {
   late String text;
@@ -17,6 +18,7 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   final List<IndexedMap> questions = [
+    //(Question,id) where tens place of id denotes the riasec domain and ones place the question
     IndexedMap("Test the quality of parts before shipment", 00),
     IndexedMap("Lay brick or tile", 01),
     IndexedMap("Work on an offshore oil-drilling rig", 02),
@@ -127,11 +129,14 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Icon(Icons.check),
         backgroundColor: Colors.black,
         onPressed: () {
-          List<int> riasec = [0, 0, 0, 0, 0, 0];
-          selectedAnswers.forEach((key, value) {
-            riasec[(key / 10).toInt()] += value!;
-          });
-          print("Riasec Score: $riasec");
+          //disable the condition if you want to test without selecting all options
+          if (selectedAnswers.length == 48) {
+            List<int> riasec = [0, 0, 0, 0, 0, 0];
+            selectedAnswers.forEach((key, value) {
+              riasec[(key / 10).toInt()] += value!;
+            });
+            sendriasec(riasec);
+          }
         },
       ),
     );
