@@ -3,7 +3,9 @@ import 'package:testapp/components/button.dart';
 import 'package:testapp/components/square.dart';
 import 'package:testapp/components/textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:testapp/pages/forgot.dart';
 import 'package:testapp/pages/home_page.dart';
+import 'package:testapp/pages/forgot.dart';
 import 'package:testapp/pages/signup.dart';
 
 class LoginPage extends StatelessWidget {
@@ -83,15 +85,20 @@ class LoginPage extends StatelessWidget {
             //password
 
             //forgot password?
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    "forgot password?",
-                    style: TextStyle(color: Colors.white),
+                  GestureDetector(
+                    onTap: () async {
+                      await resetPassword(context, emailcontroller.text);
+                    },
+                    child: Text(
+                      "Forgot Password?",
+                      style: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),

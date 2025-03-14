@@ -127,16 +127,18 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         onPressed: () {
           //disable the condition if you want to test without selecting all options
-          if (selectedAnswers.length == 48) {
-            List<int> riasec = [0, 0, 0, 0, 0, 0];
-            selectedAnswers.forEach((key, value) {
-              riasec[(key / 10).toInt()] += value!;
-            });
-            sendriasec(riasec);
-          }
+          //if (selectedAnswers.length == 48) {
+          List<int> riasec = [0, 0, 0, 0, 0, 0];
+          selectedAnswers.forEach((key, value) {
+            riasec[(key / 10).toInt()] += value!;
+          });
+          sendriasec(riasec);
+          //}else{
+          //print("Please answer all questions");
+          //}
         },
       ),
     );
