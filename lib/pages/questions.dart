@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testapp/client/client.dart';
+//import 'package:testapp/client/client.dart';
+import 'package:testapp/pages/result.dart';
 
 class IndexedMap {
   late String text;
@@ -127,7 +128,7 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         onPressed: () {
           //disable the condition if you want to test without selecting all options
           if (selectedAnswers.length == 48) {
@@ -135,7 +136,16 @@ class _QuizScreenState extends State<QuizScreen> {
             selectedAnswers.forEach((key, value) {
               riasec[(key / 10).toInt()] += value!;
             });
-            sendriasec(riasec);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ResultPage(
+                        userName: "hi",
+                        riasecScores: riasec,
+                      )),
+            );
+          } else {
+            //prompt user to complete all questions
           }
         },
       ),

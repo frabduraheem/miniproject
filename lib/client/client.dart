@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'conf.dart';
+import 'package:flutter/material.dart';
+import 'package:testapp/pages/result.dart';
 
 void sendriasec(List<int> riasec) async {
   final url = Uri.parse('${AppConfig.url}');
