@@ -1,2 +1,0 @@
-C:/Users/91906/Programs/miniproject/android/app/.cxx/Debug/1m512g1y/x86_64/CMakeFiles/edit_cache.dir
-C:/Users/91906/Programs/miniproject/android/app/.cxx/Debug/1m512g1y/x86_64/CMakeFiles/rebuild_cache.dir
