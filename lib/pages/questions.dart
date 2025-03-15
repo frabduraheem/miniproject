@@ -140,7 +140,8 @@ class _QuizScreenState extends State<QuizScreen> {
               context,
               MaterialPageRoute(
                   builder: (context) => ResultPage(
-                        userName: "hi",
+                        userName:
+                            "hi", // Replace with actual variable for username
                         riasecScores: riasec,
                       )),
             );

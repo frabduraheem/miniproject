@@ -112,6 +112,14 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
+  List<String> riasecDomains = [
+    "Realistic",
+    "Investigative",
+    "Artistic",
+    "Social",
+    "Enterprising",
+    "Conventional"
+  ];
   Widget _buildScoresSection() {
     return Column(
       children: List.generate(widget.riasecScores.length, (index) {
@@ -121,7 +129,7 @@ class _ResultPageState extends State<ResultPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Factor ${index + 1}:",
+                "${riasecDomains[index]}:",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               Text(
