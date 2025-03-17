@@ -7,6 +7,7 @@ import 'package:testapp/pages/forgot.dart';
 import 'package:testapp/pages/home_page.dart';
 import 'package:testapp/pages/forgot.dart';
 import 'package:testapp/pages/signup.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -47,145 +48,155 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Center(
-            child: Column(
+      backgroundColor: const Color.fromARGB(255, 159, 181, 214),
+      body: SingleChildScrollView(
+        child: Stack(
           children: [
-            //logo
-            const SizedBox(height: 50),
-            Icon(
-              Icons.track_changes,
-              size: 100,
-              color: Colors.white,
-            ),
-            const SizedBox(height: 50),
-            Text(
-              "CAREER COMPASS",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontStyle: FontStyle.italic),
-            ),
-
-            const SizedBox(height: 25),
-            //username
-            Textfield(
-              controller: emailcontroller,
-              hintText: 'Email',
-              obscureText: false,
-            ),
-
-            const SizedBox(height: 10),
-            Textfield(
-              controller: passwordcontroller,
-              hintText: 'Password',
-              obscureText: true,
-            ),
-            //password
-
-            //forgot password?
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () async {
-                      await resetPassword(context, emailcontroller.text);
-                    },
-                    child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Lottie.network(
+                'https://lottie.host/a55eb0cb-067c-4b41-8fde-fc153f64bb12/MZroI7nPV2.json', // NEW URL
+                fit: BoxFit.cover,
               ),
             ),
-
-            const SizedBox(height: 25),
-            // Buttonapp(
-            //   onTap: signUserIn,
-            // ),
-            ElevatedButton(
-                onPressed: () async {
-                  await signUserIn(context);
-                },
-                child: Text("Sign in")),
-//divider
-            const SizedBox(
-              height: 50,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Row(
+            SafeArea(
+              child: Center(
+                  child: Column(
                 children: [
-                  Expanded(
-                      child: Divider(
-                    thickness: 0.5,
-                    color: Colors.white,
-                  )),
-                ],
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text('Or continue with',
-                  style: TextStyle(color: Colors.white)),
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Squarefile(
-                    imagePath:
-                        '/home/frabduraheem/projects/testapp/lib/images/6929234_google_logo_icon.png'),
-                const SizedBox(
-                  width: 10,
-                ),
-                Squarefile(
-                    imagePath:
-                        '/home/frabduraheem/projects/testapp/lib/images/images.png'),
-              ],
-            ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                  const SizedBox(height: 330),
                   Text(
-                    "Not a member?",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Navigate to the signup page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                SignUpPage()), // Replace with your actual SignUpPage widget
-                      );
-                    },
-                    child: Text(
-                      "Register Now!",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    "CAREER COMPASS",
+                    style: TextStyle(
+                      color: const Color.fromARGB(108, 35, 70, 150),
+                      fontSize: 30,
+                      fontFamily: 'San Francisco',
+                      fontWeight: FontWeight.bold,
                     ),
-                  )
+                  ),
+
+                  const SizedBox(height: 25),
+                  //username
+                  Textfield(
+                    controller: emailcontroller,
+                    hintText: 'Email',
+                    obscureText: false,
+                  ),
+
+                  const SizedBox(height: 10),
+                  Textfield(
+                    controller: passwordcontroller,
+                    hintText: 'Password',
+                    obscureText: true,
+                  ),
+                  //password
+
+                  //forgot password?
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            await resetPassword(context, emailcontroller.text);
+                          },
+                          child: Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 25),
+                  // Buttonapp(
+                  //   onTap: signUserIn,
+                  // ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.indigo,
+                      ),
+                      onPressed: () async {
+                        await signUserIn(context);
+                      },
+                      child: Text(
+                        "Sign in",
+                      )),
+//divider
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Divider(
+                          thickness: 0.5,
+                          color: Colors.white,
+                        )),
+                      ],
+                    ),
+                  ),
+
+                  /*   Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text('Or continue with',
+                        style: TextStyle(color: Colors.white)),
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Squarefile(imagePath: 'lib/images/google.png'),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Squarefile(imagePath: '/lib/images/mac.png'),
+                    ],
+                  ),*/
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Not a member?",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            // Navigate to the signup page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SignUpPage()), // Replace with your actual SignUpPage widget
+                            );
+                          },
+                          child: Text(
+                            "Register Now!",
+                            style: TextStyle(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ],
-              ),
+              )),
             ),
           ],
-        )),
+        ),
       ),
     );
   }
