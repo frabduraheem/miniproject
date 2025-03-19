@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:testapp/client/conf.dart';
-import 'package:url_launcher/url_launcher.dart';
 //import 'package:testapp/client/client.dart';
 
 class ResultPage extends StatefulWidget {
@@ -21,7 +20,6 @@ class ResultPage extends StatefulWidget {
 
 class _ResultPageState extends State<ResultPage> {
   List<String> recommendedJobs = [];
-  List<String> links = [];
   bool isLoading = true;
 
   @override
@@ -44,9 +42,6 @@ class _ResultPageState extends State<ResultPage> {
         final data = jsonDecode(response.body);
         setState(() {
           recommendedJobs = List<String>.from(data['jobs']);
-          links = List<String>.from(data['links']);
-          //dont forget to delete print
-          print(links);
           isLoading = false;
         });
       } else {
@@ -150,23 +145,14 @@ class _ResultPageState extends State<ResultPage> {
 
   Widget _buildJobRecommendations() {
     return Column(
-      children: List.generate(recommendedJobs.length, (index) {
+      children: recommendedJobs.map((job) {
         return Card(
           elevation: 2,
           margin: EdgeInsets.symmetric(vertical: 4),
           child: ListTile(
-              title:
-                  Text(recommendedJobs[index], style: TextStyle(fontSize: 16)),
-              trailing: Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () async {
-                final Uri url = Uri.parse(links[index]);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url, mode: LaunchMode.externalApplication);
-                } else {
-                  //replace with appropriate gui and remove print
-                  print("couldn't launch");
-                }
-              }),
+            title: Text(job, style: TextStyle(fontSize: 16)),
+            trailing: Icon(Icons.arrow_forward_ios, size: 16),
+          ),
         );
       }).toList(),
     );
