@@ -42,7 +42,7 @@ class _LottieSplashScreenState extends State<LottieSplashScreen> {
             ),
             const SizedBox(height: 20),
             const Text(
-              "Welcome to Nexus",
+              "Welcome to Career Compass!",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
