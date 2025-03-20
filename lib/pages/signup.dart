@@ -47,7 +47,7 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 159, 181, 214),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -89,6 +89,10 @@ class SignUpPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 25),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.indigo,
+                  ),
                   onPressed: () async {
                     await signUpUser(context);
                   },
@@ -108,7 +112,8 @@ class SignUpPage extends StatelessWidget {
                       child: Text(
                         "Login now!",
                         style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                   ],
