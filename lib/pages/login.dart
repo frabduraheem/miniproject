@@ -5,22 +5,24 @@ import 'package:testapp/components/textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:testapp/pages/forgot.dart';
 import 'package:testapp/pages/home_page.dart';
-import 'package:testapp/pages/forgot.dart';
 import 'package:testapp/pages/signup.dart';
+import 'package:testapp/pages/holland_description.dart'; // ✅ Import Holland Description Page
 import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  //text editing controllers
+
+  // Text editing controllers
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
 
+  // Function to sign in the user
   Future<void> signUserIn(context) async {
     try {
-      final userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: emailcontroller.text.trim(),
-              password: passwordcontroller.text.trim());
+      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailcontroller.text.trim(),
+        password: passwordcontroller.text.trim(),
+      );
       // String UID = getCurrentUserID();
       // await FirebaseFirestore.instance.collection("users").add({
       //   "userID": UID,
@@ -28,18 +30,22 @@ class LoginPage extends StatelessWidget {
       //   "isAdmin": isAdmin,
       // });
 
+      // ✅ Navigate to HollandDescriptionPage first, before HomePage
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const HollandDescriptionPage()),
       );
+
     } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.red,
-        content: Text(e.message!),
-        duration: Duration(seconds: 5),
-        margin: EdgeInsets.all(20),
-        behavior: SnackBarBehavior.floating,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(e.message ?? "Login failed"),
+          duration: Duration(seconds: 5),
+          margin: EdgeInsets.all(20),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
     } catch (e) {
       print(e);
     }
