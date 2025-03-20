@@ -6,11 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:testapp/pages/forgot.dart';
 import 'package:testapp/pages/home_page.dart';
 import 'package:testapp/pages/signup.dart';
-<<<<<<< HEAD
 import 'package:testapp/pages/holland_description.dart'; // ✅ Import Holland Description Page
-=======
 import 'package:lottie/lottie.dart';
->>>>>>> f3475e62e5c7457e2cd32a335c6014d9abddc11e
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -26,6 +23,12 @@ class LoginPage extends StatelessWidget {
         email: emailcontroller.text.trim(),
         password: passwordcontroller.text.trim(),
       );
+      // String UID = getCurrentUserID();
+      // await FirebaseFirestore.instance.collection("users").add({
+      //   "userID": UID,
+      //   "username": _usernameController.text.trim(),
+      //   "isAdmin": isAdmin,
+      // });
 
       // ✅ Navigate to HollandDescriptionPage first, before HomePage
       Navigator.pushReplacement(
@@ -51,134 +54,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 50),
-              Icon(Icons.track_changes, size: 100, color: Colors.white),
-              const SizedBox(height: 50),
-              Text(
-                "CAREER COMPASS",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-
-              const SizedBox(height: 25),
-              // Email Text Field
-              Textfield(
-                controller: emailcontroller,
-                hintText: 'Email',
-                obscureText: false,
-              ),
-
-              const SizedBox(height: 10),
-              // Password Text Field
-              Textfield(
-                controller: passwordcontroller,
-                hintText: 'Password',
-                obscureText: true,
-              ),
-
-              // Forgot Password
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        await resetPassword(context, emailcontroller.text);
-                      },
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              // Sign-in Button
-              ElevatedButton(
-                onPressed: () async {
-                  await signUserIn(context);
-                },
-                child: Text("Sign in"),
-              ),
-
-              const SizedBox(height: 50),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(thickness: 0.5, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text(
-                  'Or continue with',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Squarefile(imagePath: 'assets/images/google_logo.png'),
-                  const SizedBox(width: 10),
-                  Squarefile(imagePath: 'assets/images/facebook_logo.png'),
-                ],
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Not a member?",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    const SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigate to Signup Page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignUpPage()),
-                        );
-                      },
-                      child: Text(
-                        "Register Now!",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-=======
       backgroundColor: const Color.fromARGB(255, 159, 181, 214),
       body: SingleChildScrollView(
         child: Stack(
@@ -327,7 +202,6 @@ class LoginPage extends StatelessWidget {
               )),
             ),
           ],
->>>>>>> f3475e62e5c7457e2cd32a335c6014d9abddc11e
         ),
       ),
     );
