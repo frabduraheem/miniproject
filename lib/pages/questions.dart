@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 //import 'package:testapp/client/client.dart';
 import 'package:testapp/pages/result.dart';
 
+
+
 class IndexedMap {
   late String text;
   late int value;
@@ -130,25 +132,34 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Icon(Icons.check),
         backgroundColor: Colors.white,
         onPressed: () {
-          //disable the condition if you want to test without selecting all options
-          if (selectedAnswers.length == 48) {
-            List<int> riasec = [0, 0, 0, 0, 0, 0];
-            selectedAnswers.forEach((key, value) {
-              riasec[(key / 10).toInt()] += value!;
-            });
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ResultPage(
-                        userName:
-                            "hi", // Replace with actual variable for username
-                        riasecScores: riasec,
-                      )),
-            );
-          } else {
-            //prompt user to complete all questions
-          }
-        },
+  if (selectedAnswers.length < questions.length) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Please answer all questions before proceeding.'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+    return;
+  }
+
+  
+
+  List<int> riasec = [0, 0, 0, 0, 0, 0];
+  selectedAnswers.forEach((key, value) {
+    riasec[key ~/ 10] += value!;
+  });
+
+  Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => ResultPage(
+      riasecScores: riasec,
+    ),
+  ),
+);
+
+},
       ),
     );
   }
