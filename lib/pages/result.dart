@@ -3,15 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:testapp/client/conf.dart';
 import 'package:url_launcher/url_launcher.dart';
-//import 'package:testapp/client/client.dart';
 
 class ResultPage extends StatefulWidget {
-  final String userName;
   final List<int> riasecScores;
 
   const ResultPage({
     Key? key,
-    required this.userName,
     required this.riasecScores,
   }) : super(key: key);
 
@@ -31,8 +28,7 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Future<void> fetchRecommendedJobs() async {
-    final url =
-        Uri.parse('${AppConfig.url}'); // Correct API URL from config.dart
+    final url = Uri.parse('${AppConfig.url}');
     try {
       final response = await http.post(
         url,
@@ -45,8 +41,6 @@ class _ResultPageState extends State<ResultPage> {
         setState(() {
           recommendedJobs = List<String>.from(data['jobs']);
           links = List<String>.from(data['links']);
-          //dont forget to delete print
-          print(links);
           isLoading = false;
         });
       } else {
@@ -69,9 +63,7 @@ class _ResultPageState extends State<ResultPage> {
       appBar: AppBar(
         title: Text(
           "Career Guidance Result",
-          style: TextStyle(
-            color: Colors.white,
-          ),
+          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black,
       ),
@@ -81,7 +73,7 @@ class _ResultPageState extends State<ResultPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Congratulations, ${widget.userName}!",
+              "Congratulations!", // ✅ Removed username
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
@@ -125,6 +117,7 @@ class _ResultPageState extends State<ResultPage> {
     "Enterprising",
     "Conventional"
   ];
+
   Widget _buildScoresSection() {
     return Column(
       children: List.generate(widget.riasecScores.length, (index) {
@@ -155,18 +148,17 @@ class _ResultPageState extends State<ResultPage> {
           elevation: 2,
           margin: EdgeInsets.symmetric(vertical: 4),
           child: ListTile(
-              title:
-                  Text(recommendedJobs[index], style: TextStyle(fontSize: 16)),
-              trailing: Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () async {
-                final Uri url = Uri.parse(links[index]);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url, mode: LaunchMode.externalApplication);
-                } else {
-                  //replace with appropriate gui and remove print
-                  print("couldn't launch");
-                }
-              }),
+            title: Text(recommendedJobs[index], style: TextStyle(fontSize: 16)),
+            trailing: Icon(Icons.arrow_forward_ios, size: 16),
+            onTap: () async {
+              final Uri url = Uri.parse(links[index]);
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url, mode: LaunchMode.externalApplication);
+              } else {
+                print("Couldn't launch");
+              }
+            },
+          ),
         );
       }).toList(),
     );
