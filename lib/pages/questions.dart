@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 //import 'package:testapp/client/client.dart';
 import 'package:testapp/pages/result.dart';
 
-
-
 class IndexedMap {
   late String text;
   late int value;
@@ -132,34 +130,37 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Icon(Icons.check),
         backgroundColor: Colors.white,
         onPressed: () {
-  if (selectedAnswers.length < questions.length) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Please answer all questions before proceeding.'),
-        duration: Duration(seconds: 2),
-        backgroundColor: Colors.red,
-      ),
-    );
-    return;
-  }
+          if (selectedAnswers.length < questions.length) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Please answer all questions before proceeding.'),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.red,
+              ),
+            );
+            return;
+          }
 
-  
+          List<int?> answers = [];
+          for (var i = 0; i < 8; i++) {
+            for (var j = 0; j < 8; j++) {
+              if (selectedAnswers[i * 10 + j] != null) {
+                answers.add(selectedAnswers[i * 10 + j]);
+              }
+            }
+          }
+          // List<int> riasec = [0, 0, 0, 0, 0, 0];
+          // selectedAnswers.forEach((key, value) {
+          //   riasec[key ~/ 10] += value!;
+          // });
 
-  List<int> riasec = [0, 0, 0, 0, 0, 0];
-  selectedAnswers.forEach((key, value) {
-    riasec[key ~/ 10] += value!;
-  });
-
-  Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => ResultPage(
-      riasecScores: riasec,
-    ),
-  ),
-);
-
-},
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResultPage(answers: answers),
+            ),
+          );
+        },
       ),
     );
   }
