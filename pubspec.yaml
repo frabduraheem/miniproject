@@ -51,8 +51,6 @@ flutter:
 
   # ✅ Only include animations folder (No images)
   assets:
-    - lib/images/google.png
-    - lib/images/mac.png
     - assets/animations/  
     - assets/animations/customer_support.json  # ✅ Ensure this file exists
 
