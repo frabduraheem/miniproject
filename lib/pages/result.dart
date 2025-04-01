@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:testapp/client/conf.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ResultPage extends StatefulWidget {
-  final List<int> riasecScores;
+  final List<int?> answers;
 
-  const ResultPage({
-    Key? key,
-    required this.riasecScores,
-  }) : super(key: key);
+  const ResultPage({Key? key, required this.answers}) : super(key: key);
 
   @override
   _ResultPageState createState() => _ResultPageState();
@@ -19,6 +16,7 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   List<String> recommendedJobs = [];
   List<String> links = [];
+  List<int> riasecScores = [];
   bool isLoading = true;
 
   @override
@@ -28,12 +26,18 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Future<void> fetchRecommendedJobs() async {
-    final url = Uri.parse('${AppConfig.url}');
+    final url = Uri.parse(
+      'https://miniproject-backend-production.up.railway.app/job_finder',
+    );
+
     try {
+      User? user = FirebaseAuth.instance.currentUser;
+      String? uid = user?.uid; // Returns null if no user is logged in
+      print("uid:$uid");
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'riasecscore': widget.riasecScores}),
+        body: jsonEncode({'uid': uid, 'answers': widget.answers}),
       );
 
       if (response.statusCode == 200) {
@@ -41,6 +45,7 @@ class _ResultPageState extends State<ResultPage> {
         setState(() {
           recommendedJobs = List<String>.from(data['jobs']);
           links = List<String>.from(data['links']);
+          riasecScores = List<int>.from(data['riasec']);
           isLoading = false;
         });
       } else {
@@ -115,12 +120,12 @@ class _ResultPageState extends State<ResultPage> {
     "Artistic",
     "Social",
     "Enterprising",
-    "Conventional"
+    "Conventional",
   ];
 
   Widget _buildScoresSection() {
     return Column(
-      children: List.generate(widget.riasecScores.length, (index) {
+      children: List.generate(riasecScores.length, (index) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: Row(
@@ -131,7 +136,7 @@ class _ResultPageState extends State<ResultPage> {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               Text(
-                widget.riasecScores[index].toString(),
+                riasecScores[index].toString(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
             ],
@@ -143,24 +148,28 @@ class _ResultPageState extends State<ResultPage> {
 
   Widget _buildJobRecommendations() {
     return Column(
-      children: List.generate(recommendedJobs.length, (index) {
-        return Card(
-          elevation: 2,
-          margin: EdgeInsets.symmetric(vertical: 4),
-          child: ListTile(
-            title: Text(recommendedJobs[index], style: TextStyle(fontSize: 16)),
-            trailing: Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () async {
-              final Uri url = Uri.parse(links[index]);
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url, mode: LaunchMode.externalApplication);
-              } else {
-                print("Couldn't launch");
-              }
-            },
-          ),
-        );
-      }).toList(),
+      children:
+          List.generate(recommendedJobs.length, (index) {
+            return Card(
+              elevation: 2,
+              margin: EdgeInsets.symmetric(vertical: 4),
+              child: ListTile(
+                title: Text(
+                  recommendedJobs[index],
+                  style: TextStyle(fontSize: 16),
+                ),
+                trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () async {
+                  final Uri url = Uri.parse(links[index]);
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  } else {
+                    print("Couldn't launch");
+                  }
+                },
+              ),
+            );
+          }).toList(),
     );
   }
 }
