@@ -35,12 +35,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LottieSplashScreen(), // Show animation first
-        '/holland': (context) => HollandDescriptionPage(), // ✅ holland screen after splash
+        '/holland': (context) => HollandDescriptionPage(), // ✅ Holland screen after splash
         '/home': (context) => HomePage(),
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),
-        '/auth': (context) => Authpage(),
-        
+        '/auth': (context) => AuthPage(),
       },
     );
   }
