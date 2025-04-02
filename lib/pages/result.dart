@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:testapp/pages/login.dart';
 
 class ResultPage extends StatefulWidget {
-  final List<int?> answers;
-
-  const ResultPage({Key? key, required this.answers}) : super(key: key);
+  final Map<String, dynamic> data;
+  const ResultPage({Key? key, required this.data}) : super(key: key);
 
   @override
   _ResultPageState createState() => _ResultPageState();
@@ -22,44 +20,9 @@ class _ResultPageState extends State<ResultPage> {
   @override
   void initState() {
     super.initState();
-    fetchRecommendedJobs();
-  }
-
-  Future<void> fetchRecommendedJobs() async {
-    final url = Uri.parse(
-      'https://miniproject-backend-production.up.railway.app/job_finder',
-    );
-
-    try {
-      User? user = FirebaseAuth.instance.currentUser;
-      String? uid = user?.uid; // Returns null if no user is logged in
-      print("uid:$uid");
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'uid': uid, 'answers': widget.answers}),
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        setState(() {
-          recommendedJobs = List<String>.from(data['jobs']);
-          links = List<String>.from(data['links']);
-          riasecScores = List<int>.from(data['riasec']);
-          isLoading = false;
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        print("Error: ${response.statusCode} - ${response.body}");
-      }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      print("Failed to connect to server: $e");
-    }
+    recommendedJobs = List<String>.from(widget.data['jobs']);
+    links = List<String>.from(widget.data['links']);
+    riasecScores = List<int>.from(widget.data['riasec']);
   }
 
   @override
@@ -94,19 +57,45 @@ class _ResultPageState extends State<ResultPage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 10),
-            isLoading
-                ? Center(child: CircularProgressIndicator())
-                : _buildJobRecommendations(),
+            _buildJobRecommendations(),
             Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Try Again"),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Try Again"),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    textStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                ElevatedButton(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                    );
+                  },
+                  child: Text("Sign Out"),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    textStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

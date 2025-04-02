@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:testapp/auth_services.dart';
 import 'package:testapp/pages/forgot.dart';
-import 'package:testapp/pages/home_page.dart';
 import 'package:testapp/pages/signup.dart';
-import 'package:testapp/pages/holland_description.dart';
+import 'package:testapp/client.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatefulWidget {
@@ -27,38 +26,44 @@ class _LoginPageState extends State<LoginPage> {
 
       User? user = userCredential.user;
 
-      if (user != null && !user.emailVerified) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Email Not Verified"),
-            content: const Text("Please verify your email before logging in."),
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  await authService.resendVerificationEmail();
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Verification email resent! Check your inbox."),
-                      backgroundColor: Colors.green,
+      if (user != null) {
+        if (!user.emailVerified) {
+          showDialog(
+            context: context,
+            builder:
+                (context) => AlertDialog(
+                  title: const Text("Email Not Verified"),
+                  content: const Text(
+                    "Please verify your email before logging in.",
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () async {
+                        await authService.resendVerificationEmail();
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Verification email resent! Check your inbox.",
+                            ),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      },
+                      child: const Text("Resend Email"),
                     ),
-                  );
-                },
-                child: const Text("Resend Email"),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("OK"),
-              ),
-            ],
-          ),
-        );
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text("OK"),
+                    ),
+                  ],
+                ),
+          );
+        } else {
+          hasSavedDataInServer(context);
+        }
       } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HollandDescriptionPage()),
-        );
+        print("Error connectiong to login server");
       }
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -93,12 +98,16 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     const SizedBox(height: 340), // Moved downward slightly
-
                     // App Title with Darker Shade
                     Text(
                       "CAREER COMPASS",
                       style: TextStyle(
-                        color: const Color.fromARGB(255, 25, 50, 120), // Darker blue shade
+                        color: const Color.fromARGB(
+                          255,
+                          25,
+                          50,
+                          120,
+                        ), // Darker blue shade
                         fontSize: 28, // Slightly reduced font size
                         fontFamily: 'San Francisco',
                         fontWeight: FontWeight.bold,
@@ -106,7 +115,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
 
                     const SizedBox(height: 50), // Added space
-
                     // Email Box (Smaller & Lower)
                     Container(
                       width: 280, // Decreased size
@@ -128,13 +136,15 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           hintText: 'Email',
                           border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 10,
+                          ),
                         ),
                       ),
                     ),
 
                     const SizedBox(height: 12), // Moved downward slightly
-
                     // Password Box (Smaller & Lower)
                     Container(
                       width: 280, // Decreased size
@@ -157,7 +167,10 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           hintText: 'Password',
                           border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 10,
+                          ),
                         ),
                       ),
                     ),
@@ -188,7 +201,10 @@ class _LoginPageState extends State<LoginPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.indigo,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 50,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -214,7 +230,9 @@ class _LoginPageState extends State<LoginPage> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const SignUpPage()),
+                              MaterialPageRoute(
+                                builder: (context) => const SignUpPage(),
+                              ),
                             );
                           },
                           child: const Text(

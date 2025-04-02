@@ -5,17 +5,12 @@ import 'package:testapp/pages/authpage.dart';
 import 'package:testapp/pages/home_page.dart';
 import 'package:testapp/pages/login.dart';
 import 'package:testapp/pages/signup.dart';
-import 'package:testapp/pages/holland_description.dart'; // ✅ Import Holland Model page
-
-// Import your widgets
-import 'package:testapp/widgets/lottie_background.dart';
+import 'package:testapp/pages/holland_description.dart';
 import 'package:testapp/widgets/lottie_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -35,7 +30,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LottieSplashScreen(), // Show animation first
-        '/holland': (context) => HollandDescriptionPage(), // ✅ Holland screen after splash
+        '/holland':
+            (context) =>
+                HollandDescriptionPage(), // ✅ Holland screen after splash
         '/home': (context) => HomePage(),
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'package:testapp/client/client.dart';
+import 'package:http/http.dart';
+import 'package:testapp/client.dart';
 import 'package:testapp/pages/result.dart';
+import 'dart:convert';
 
 class IndexedMap {
   late String text;
@@ -13,11 +15,26 @@ class IndexedMap {
 }
 
 class QuizScreen extends StatefulWidget {
+  final List<int>? answers;
+  const QuizScreen({Key? key, this.answers}) : super(key: key);
+
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.answers != null) {
+      for (var i = 0; i < 48; i++) {
+        selectedAnswers[questions[i].value] = widget.answers?[i];
+      }
+    }
+  }
+
+  List<int?> answers = [];
+
   final List<IndexedMap> questions = [
     //(Question,id) where tens place of id denotes the riasec domain and ones place the question
     IndexedMap("Test the quality of parts before shipment", 00),
@@ -129,7 +146,7 @@ class _QuizScreenState extends State<QuizScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         backgroundColor: Colors.white,
-        onPressed: () {
+        onPressed: () async {
           if (selectedAnswers.length < questions.length) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -141,7 +158,7 @@ class _QuizScreenState extends State<QuizScreen> {
             return;
           }
 
-          List<int?> answers = [];
+          answers = [];
           for (var i = 0; i < 8; i++) {
             for (var j = 0; j < 8; j++) {
               if (selectedAnswers[i * 10 + j] != null) {
@@ -149,17 +166,20 @@ class _QuizScreenState extends State<QuizScreen> {
               }
             }
           }
-          // List<int> riasec = [0, 0, 0, 0, 0, 0];
-          // selectedAnswers.forEach((key, value) {
-          //   riasec[key ~/ 10] += value!;
-          // });
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ResultPage(answers: answers),
-            ),
-          );
+          try {
+            Response response = await fetchRecommendedJobs(answers);
+            if (response.statusCode == 200) {
+              final data = jsonDecode(response.body);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ResultPage(data: data)),
+              );
+            } else {
+              print("Error: ${response.statusCode} - ${response.body}");
+            }
+          } catch (e) {
+            print("Error connecting to database server");
+          }
         },
       ),
     );
