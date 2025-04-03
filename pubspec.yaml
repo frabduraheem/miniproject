@@ -53,7 +53,8 @@ flutter:
   assets:
     - assets/animations/  
     - assets/animations/customer_support.json  # ✅ Ensure this file exists
-
+    - assets/logo.png
+    
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -81,3 +82,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo.png"

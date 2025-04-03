@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:testapp/pages/home_page.dart';
+import 'package:testapp/client.dart';
 import 'package:testapp/pages/login.dart';
-import 'package:testapp/pages/holland_description.dart'; // ✅ Added Holland Page
 
 class LottieSplashScreen extends StatefulWidget {
   @override
@@ -17,11 +16,12 @@ class _LottieSplashScreenState extends State<LottieSplashScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       if (FirebaseAuth.instance.currentUser != null) {
         // ✅ Show Holland page first, then Home if user is logged in
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HollandDescriptionPage()));
+        hasSavedDataInServer(context);
       } else {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
       }
     });
   }
@@ -52,10 +52,7 @@ class _LottieSplashScreenState extends State<LottieSplashScreen> {
             const SizedBox(height: 10),
             const Text(
               "Your journey to the perfect career begins here!",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
           ],
         ),
